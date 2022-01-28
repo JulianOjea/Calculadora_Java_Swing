@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.swing.*;
 
-public class CalculadoraLayout extends JFrame {
+public class CalculadoraView extends JFrame {
 
     // Caja para mostrar el texto
     JTextField textField;
@@ -23,7 +23,7 @@ public class CalculadoraLayout extends JFrame {
 
     GroupLayout layout;
 
-    public CalculadoraLayout() {
+    public CalculadoraView() {
 
         this.setTitle("calculando...");
         // Crear los componentes
@@ -72,6 +72,7 @@ public class CalculadoraLayout extends JFrame {
         textField = new JTextField();
         textField.setPreferredSize(new Dimension(0, 30)); // Cambiando tamaño de la altura de la caja de texto
         textField.setEditable(false); // la caja de texto no es editable
+        textField.setHorizontalAlignment(JTextField.RIGHT);// Los números se alinean a la derecha
 
         button0 = new JButton("0");
         button1 = new JButton("1");
@@ -160,5 +161,57 @@ public class CalculadoraLayout extends JFrame {
                         .addComponent(buttonDot)
                         .addComponent(buttonC)
                         .addComponent(buttonCE)));
+    }
+
+    public JTextField getTextfield() {
+        return textField;
+    }
+
+    public JButton getButton0() {
+        return button0;
+    }
+
+    public JButton getButton1() {
+        return button1;
+    }
+
+    public JButton getButton2() {
+        return button2;
+    }
+
+    public JButton getButton3() {
+        return button3;
+    }
+
+    public JButton getButton4() {
+        return button4;
+    }
+
+    public JButton getButton5() {
+        return button5;
+    }
+
+    public JButton getButton6() {
+        return button6;
+    }
+
+    public JButton getButton7() {
+        return button7;
+    }
+
+    public JButton getButton8() {
+        return button8;
+    }
+
+    public JButton getButton9() {
+        return button9;
+    }
+
+    public void setTextField(int number) {
+        if (textField.getText().equals("0")){
+            textField.setText(Integer.toString(number));
+        }
+        else
+            textField.setText(textField.getText() + Integer.toString(number));
     }
 }
