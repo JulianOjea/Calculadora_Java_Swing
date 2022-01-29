@@ -29,7 +29,11 @@ public class CalculadoraController {
 
         view.getButtonDot().addActionListener(e -> updateDotOnTextField());
 
-        view.getButtonPlus().addActionListener(e -> operate(Suma.class));
+        view.getButtonPlus().addActionListener(e -> operate("+"));
+        view.getButtonMinus().addActionListener(e -> operate("-"));
+        view.getButtonMult().addActionListener(e -> operate("*"));
+        view.getButtonDiv().addActionListener(e -> operate("/"));
+        view.getButtonPerc().addActionListener(e -> operate("%"));
 
         view.getButtonEqual().addActionListener(e -> evaluate());
     }
@@ -46,8 +50,7 @@ public class CalculadoraController {
         if (model.getOperandPressed()) {
             view.resetTextField(number);
             model.setOperandPressed(false);
-        }
-        else {
+        } else {
             view.setTextField(number);
         }
 
@@ -57,18 +60,21 @@ public class CalculadoraController {
         view.setDotOnTextField();
     }
 
-    private void operate(Class<?> operation) {
-        model.saveOnMemory(view.getTextfield().getText());
-        model.setOperand(operation.toString());
+    private void operate(String operation) {
+        if (operation.equals("%")) {
+            model.setIsPercentage(true);
+        } else{
+            model.saveOnMemory(view.getTextfield().getText());
+            model.setOperand(operation);
+        }
         model.setOperandPressed(true);
     }
 
     private void evaluate() {
-        System.out.println("HOLAAAAA");
         double result;
         result = model.evaluate(model.getMemoryNumber(), Double.parseDouble(view.getTextfield().getText()));
-        System.out.println("resultado" + result);
         view.setResult(result);
         model.setMemoryNumber(result);
+        model.setOperandPressed(true); // como se acaba de presionar un operando se settea a true
     }
 }

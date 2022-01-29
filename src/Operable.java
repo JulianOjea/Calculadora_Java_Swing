@@ -1,3 +1,3 @@
 public interface Operable {
-    public double Operar (double n1, double n2);
+    public double operar (double n1, double n2);
 }
