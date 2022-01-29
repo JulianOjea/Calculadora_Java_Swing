@@ -15,7 +15,7 @@ public class CalculadoraView extends JFrame {
     // Boton punto
     JButton buttonDot;
     // Botones de operandos
-    JButton buttonPlus, buttonMinus, buttonMult, buttonDiv, buttonPerc, buttonEquals;
+    JButton buttonPlus, buttonMinus, buttonMult, buttonDiv, buttonPerc, buttonEqual;
     // Botones de reseteo
     JButton buttonC, buttonCE;
     // Lista de todos los botones (para posible utilidad en el código)
@@ -62,7 +62,7 @@ public class CalculadoraView extends JFrame {
         buttonList.add(buttonMult);
         buttonList.add(buttonDiv);
         buttonList.add(buttonPerc);
-        buttonList.add(buttonEquals);
+        buttonList.add(buttonEqual);
 
         buttonList.add(buttonC);
         buttonList.add(buttonCE);
@@ -92,7 +92,7 @@ public class CalculadoraView extends JFrame {
         buttonMult = new JButton("*");
         buttonDiv = new JButton("/");
         buttonPerc = new JButton("%");
-        buttonEquals = new JButton("=");
+        buttonEqual = new JButton("=");
 
         buttonC = new JButton("C");
         buttonCE = new JButton("CE");
@@ -127,7 +127,7 @@ public class CalculadoraView extends JFrame {
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(buttonMinus)
                                 .addComponent(buttonDiv)
-                                .addComponent(buttonEquals)
+                                .addComponent(buttonEqual)
                                 .addComponent(buttonCE))));
 
         // Todos los botones tienen el mismo tamaño que el mayor boton, en este caso el
@@ -155,7 +155,7 @@ public class CalculadoraView extends JFrame {
                         .addComponent(button8)
                         .addComponent(button9)
                         .addComponent(buttonPerc)
-                        .addComponent(buttonEquals))
+                        .addComponent(buttonEqual))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(button0)
                         .addComponent(buttonDot)
@@ -207,11 +207,52 @@ public class CalculadoraView extends JFrame {
         return button9;
     }
 
+    public JButton getButtonC() {
+        return buttonC;
+    }
+
+    public JButton getButtonCE() {
+        return buttonCE;
+    }
+
+    public JButton getButtonDot() {
+        return buttonDot;
+    }
+
+    public JButton getButtonPlus() {
+        return buttonPlus;
+    }
+
+    public JButton getButtonEqual(){
+        return buttonEqual;
+    }
+
     public void setTextField(int number) {
         if (textField.getText().equals("0")){
             textField.setText(Integer.toString(number));
         }
         else
             textField.setText(textField.getText() + Integer.toString(number));
+    }
+
+    public void setResult(double number){
+        textField.setText(Double.toString(number));
+    }
+
+    public void resetTextField(int number){
+        textField.setText(Integer.toString(number));
+    }
+
+    public void setDotOnTextField(){
+        if (!textField.getText().contains(".")){
+            textField.setText(textField.getText() + ".");
+        }
+    }
+
+    public void deleteOperand(){
+        if (!textField.getText().equals("0")){
+            textField.setText(textField.getText().substring(0, textField.getText().length()-1));
+            if (textField.getText().length() == 0) textField.setText("0");
+        }
     }
 }
