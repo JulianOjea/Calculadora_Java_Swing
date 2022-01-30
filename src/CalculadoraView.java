@@ -37,6 +37,7 @@ public class CalculadoraView extends JFrame {
         createGroupLayout();
 
         pack(); // agrupa los botones para el display
+        button0.setMinimumSize(new Dimension(buttonCE.getWidth()*2+7, buttonCE.getHeight()));//cambia el tamaño del botton 0
         setLocationRelativeTo(null); // centra la ventana en el medio de la panyalla
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false); // no se permite que la ventana cambie de tamaño
@@ -44,7 +45,7 @@ public class CalculadoraView extends JFrame {
     }
 
     private void initButtonList() {
-        buttonList.add(button0);
+        //buttonList.add(button0);
         buttonList.add(button1);
         buttonList.add(button2);
         buttonList.add(button3);
@@ -75,7 +76,7 @@ public class CalculadoraView extends JFrame {
         textField.setHorizontalAlignment(JTextField.RIGHT);// Los números se alinean a la derecha
 
         button0 = new JButton("0");
-        
+
         button1 = new JButton("1");
         button2 = new JButton("2");
         button3 = new JButton("3");
@@ -98,10 +99,12 @@ public class CalculadoraView extends JFrame {
         buttonC = new JButton("C");
         buttonCE = new JButton("CE");
 
-        button0.setMinimumSize(new Dimension((int)buttonCE.getSize().getWidth()*2,(int)buttonCE.getSize().getHeight()));
-   // System.out.println("este es el"buttonCE.getSize().getWidth()*2);
-        button0.setMinimumSize(new Dimension(200,300));
-        //button0.setSize((int)buttonCE.getSize().getWidth()*2, (int)buttonCE.getSize().getHeight());
+        button0.setMinimumSize(
+                new Dimension((int) buttonCE.getSize().getWidth() * 2, (int) buttonCE.getSize().getHeight()));
+        // System.out.println("este es el"buttonCE.getSize().getWidth()*2);
+        
+        
+        // (int)buttonCE.getSize().getHeight());
     }
 
     private void createGroupLayout() {
@@ -109,65 +112,68 @@ public class CalculadoraView extends JFrame {
         layout.setAutoCreateContainerGaps(true);
 
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(textField)
-                        .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(textField)
+                .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                         .addComponent(button1)
                                                         .addComponent(button4)
-                                                        .addComponent(button7)
-                                                        .addComponent(button0))
-                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                        .addComponent(button7))
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                         .addComponent(button2)
                                                         .addComponent(button5)
-                                                        .addComponent(button8)
-                                                        .addComponent(buttonDot))
-                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                        .addComponent(button3)
-                                                        .addComponent(button6)
-                                                        .addComponent(button9))
-                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                        .addComponent(buttonPlus)
-                                                        .addComponent(buttonMult)
-                                                        .addComponent(buttonPerc)
-                                                        .addComponent(buttonC))
-                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                        .addComponent(buttonMinus)
-                                                        .addComponent(buttonDiv)
-                                                        .addComponent(buttonEqual)
-                                                        .addComponent(buttonCE))));
+                                                        .addComponent(button8)))
+                                        .addComponent(button0))
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(button3)
+                                        .addComponent(button6)
+                                        .addComponent(button9)
+                                        .addComponent(buttonDot))
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(buttonPlus)
+                                        .addComponent(buttonMult)
+                                        .addComponent(buttonPerc)
+                                        .addComponent(buttonC))
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addComponent(buttonMinus)
+                                        .addComponent(buttonDiv)
+                                        .addComponent(buttonEqual)
+                                        .addComponent(buttonCE))));
 
         // Todos los botones tienen el mismo tamaño que el mayor boton, en este caso el
         // boton CE
         for (JButton jButton : buttonList) {
-                layout.linkSize(jButton, buttonCE);
+            layout.linkSize(jButton, buttonCE);
         }
 
         layout.setVerticalGroup(layout.createSequentialGroup()
-                        .addComponent(textField)
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(button1)
-                                        .addComponent(button2)
-                                        .addComponent(button3)
-                                        .addComponent(buttonPlus)
-                                        .addComponent(buttonMinus))
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(button4)
-                                        .addComponent(button5)
-                                        .addComponent(button6)
-                                        .addComponent(buttonMult)
-                                        .addComponent(buttonDiv))
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(button7)
-                                        .addComponent(button8)
-                                        .addComponent(button9)
-                                        .addComponent(buttonPerc)
-                                        .addComponent(buttonEqual))
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(button0)
-                                        .addComponent(buttonDot)
-                                        .addComponent(buttonC)
-                                        .addComponent(buttonCE)));
-}
+                .addComponent(textField)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(button1)
+                        .addComponent(button2)
+                        .addComponent(button3)
+                        .addComponent(buttonPlus)
+                        .addComponent(buttonMinus))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(button4)
+                        .addComponent(button5)
+                        .addComponent(button6)
+                        .addComponent(buttonMult)
+                        .addComponent(buttonDiv))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(button7)
+                        .addComponent(button8)
+                        .addComponent(button9)
+                        .addComponent(buttonPerc)
+                        .addComponent(buttonEqual))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(button0)
+                        .addComponent(buttonDot)
+                        .addComponent(buttonC)
+                        .addComponent(buttonCE)));
+    }
+
     public JTextField getTextfield() {
         return textField;
     }
@@ -256,7 +262,7 @@ public class CalculadoraView extends JFrame {
     }
 
     public void setResult(double number) {
-        if (number % 1 == 0) //Si el resultado no tiene decimales se muestra un número entero
+        if (number % 1 == 0) // Si el resultado no tiene decimales se muestra un número entero
             textField.setText(Integer.toString((int) number));
         else
             textField.setText(Double.toString(number));
