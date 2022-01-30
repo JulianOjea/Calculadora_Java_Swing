@@ -8,7 +8,9 @@ public class CalculadoraView extends JFrame {
 
     // Caja para mostrar el texto
     JTextField textField;
+    // Caja para mostrar el texto de memoria
 
+    JTextField memoryTextField;
     // Botones numéricos
     JButton button0, button1, button2, button3, button4;
     JButton button5, button6, button7, button8, button9;
@@ -20,6 +22,9 @@ public class CalculadoraView extends JFrame {
     JButton buttonC, buttonCE;
     // Lista de todos los botones (para posible utilidad en el código)
     List<JButton> buttonList = new ArrayList<JButton>();
+
+    // botones de meoria
+    JButton buttonMS, buttonMR, buttonMPlus, buttonMMinus, buttonMC;
 
     GroupLayout layout;
 
@@ -37,7 +42,12 @@ public class CalculadoraView extends JFrame {
         createGroupLayout();
 
         pack(); // agrupa los botones para el display
-        button0.setMinimumSize(new Dimension(buttonCE.getWidth()*2+7, buttonCE.getHeight()));//cambia el tamaño del botton 0
+        //cambia el tamaño del boton 0
+        button0.setMinimumSize(new Dimension(buttonCE.getWidth() * 2 + 7, buttonCE.getHeight()));
+        buttonMR.setMinimumSize(new Dimension(buttonCE.getWidth() * 2 + 7, buttonCE.getHeight()));
+        buttonMS.setMinimumSize(new Dimension(buttonCE.getWidth() * 2 + 7, buttonCE.getHeight()));
+        buttonMC.setMinimumSize(new Dimension(buttonCE.getWidth() * 2 + 7, buttonCE.getHeight()));
+
         setLocationRelativeTo(null); // centra la ventana en el medio de la panyalla
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false); // no se permite que la ventana cambie de tamaño
@@ -45,7 +55,7 @@ public class CalculadoraView extends JFrame {
     }
 
     private void initButtonList() {
-        //buttonList.add(button0);
+        // buttonList.add(button0);
         buttonList.add(button1);
         buttonList.add(button2);
         buttonList.add(button3);
@@ -67,6 +77,9 @@ public class CalculadoraView extends JFrame {
 
         buttonList.add(buttonC);
         buttonList.add(buttonCE);
+
+        buttonList.add(buttonMMinus);
+        buttonList.add(buttonMPlus);
     }
 
     private void initComponents() {
@@ -74,6 +87,11 @@ public class CalculadoraView extends JFrame {
         textField.setPreferredSize(new Dimension(0, 30)); // Cambiando tamaño de la altura de la caja de texto
         textField.setEditable(false); // la caja de texto no es editable
         textField.setHorizontalAlignment(JTextField.RIGHT);// Los números se alinean a la derecha
+
+        memoryTextField = new JTextField();
+        memoryTextField.setPreferredSize(new Dimension(0, 30));
+        memoryTextField.setEditable(false);
+        memoryTextField.setHorizontalAlignment(JTextField.RIGHT);
 
         button0 = new JButton("0");
 
@@ -99,21 +117,24 @@ public class CalculadoraView extends JFrame {
         buttonC = new JButton("C");
         buttonCE = new JButton("CE");
 
+        buttonMPlus = new JButton("M+");
+        buttonMMinus = new JButton("M-");
+        buttonMR = new JButton("MR");
+        buttonMS = new JButton("MS");
+        buttonMC = new JButton("MC");
+
         button0.setMinimumSize(
                 new Dimension((int) buttonCE.getSize().getWidth() * 2, (int) buttonCE.getSize().getHeight()));
-        // System.out.println("este es el"buttonCE.getSize().getWidth()*2);
-        
-        
-        // (int)buttonCE.getSize().getHeight());
     }
 
     private void createGroupLayout() {
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
-        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(textField)
-                .addGroup(layout.createSequentialGroup()
+        layout.setHorizontalGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(textField)
+                        .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -139,7 +160,17 @@ public class CalculadoraView extends JFrame {
                                         .addComponent(buttonMinus)
                                         .addComponent(buttonDiv)
                                         .addComponent(buttonEqual)
-                                        .addComponent(buttonCE))));
+                                        .addComponent(buttonCE))))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(memoryTextField)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(buttonMPlus)
+                                .addComponent(buttonMMinus))
+                        .addComponent(buttonMR)
+                        .addComponent(buttonMS)
+                        .addComponent(buttonMC))
+
+        );
 
         // Todos los botones tienen el mismo tamaño que el mayor boton, en este caso el
         // boton CE
@@ -147,31 +178,40 @@ public class CalculadoraView extends JFrame {
             layout.linkSize(jButton, buttonCE);
         }
 
-        layout.setVerticalGroup(layout.createSequentialGroup()
-                .addComponent(textField)
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(button1)
-                        .addComponent(button2)
-                        .addComponent(button3)
-                        .addComponent(buttonPlus)
-                        .addComponent(buttonMinus))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(button4)
-                        .addComponent(button5)
-                        .addComponent(button6)
-                        .addComponent(buttonMult)
-                        .addComponent(buttonDiv))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(button7)
-                        .addComponent(button8)
-                        .addComponent(button9)
-                        .addComponent(buttonPerc)
-                        .addComponent(buttonEqual))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(button0)
-                        .addComponent(buttonDot)
-                        .addComponent(buttonC)
-                        .addComponent(buttonCE)));
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createSequentialGroup()
+                        .addComponent(textField)
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(button1)
+                                .addComponent(button2)
+                                .addComponent(button3)
+                                .addComponent(buttonPlus)
+                                .addComponent(buttonMinus))
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(button4)
+                                .addComponent(button5)
+                                .addComponent(button6)
+                                .addComponent(buttonMult)
+                                .addComponent(buttonDiv))
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(button7)
+                                .addComponent(button8)
+                                .addComponent(button9)
+                                .addComponent(buttonPerc)
+                                .addComponent(buttonEqual))
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(button0)
+                                .addComponent(buttonDot)
+                                .addComponent(buttonC)
+                                .addComponent(buttonCE)))
+                .addGroup(layout.createSequentialGroup()
+                        .addComponent(memoryTextField)
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(buttonMPlus)
+                                .addComponent(buttonMMinus))
+                        .addComponent(buttonMR)
+                        .addComponent(buttonMS)
+                        .addComponent(buttonMC)));
     }
 
     public JTextField getTextfield() {
