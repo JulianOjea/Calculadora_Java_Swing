@@ -9,7 +9,7 @@ public class CalculadoraController {
     }
 
     public void initView() {
-        view.getTextfield().setText(Integer.toString((int) model.getMemoryNumber()));
+        view.getTextfield().setText(Integer.toString((int) model.getActualNumber()));
     }
 
     public void initController() {
@@ -36,6 +36,40 @@ public class CalculadoraController {
         view.getButtonPerc().addActionListener(e -> operate("%"));
 
         view.getButtonEqual().addActionListener(e -> evaluate());
+
+        view.getButtonMS().addActionListener(e -> saveOnMemory());
+        view.getButtonMR().addActionListener(e -> loadFromMemory());
+        view.getButtonMPlus().addActionListener(e -> operateMemory('+'));
+        view.getButtonMMinus().addActionListener(e -> operateMemory('-'));
+        view.getButtonMC().addActionListener(e -> resetMemory());
+    }
+
+    private void resetMemory() {
+        model.setMemoryNumber(0);
+        view.setMemoryTextField(0);
+    }
+
+    private void operateMemory(char c) {
+        double result = model.evaluateWithMemory(
+                Double.parseDouble(view.getTextfield().getText()),
+                model.getMemoryNumber(),
+                c);
+        System.out.println(result);
+        model.setMemoryNumber(result);
+        view.setMemoryTextField(result);
+    }
+
+    private void loadFromMemory() {
+        double number = model.getMemoryNumber();
+        view.setResult(number);
+        model.setOperandPressed(true);
+    }
+
+    private void saveOnMemory() {
+        double number = Double.parseDouble(view.getTextfield().getText());
+        model.setMemoryNumber(number);
+        view.setMemoryTextField(number);
+        model.setOperandPressed(true);
     }
 
     private void deleteLastOperand() {
@@ -63,7 +97,7 @@ public class CalculadoraController {
     private void operate(String operation) {
         if (operation.equals("%")) {
             model.setIsPercentage(true);
-        } else{
+        } else {
             model.saveOnMemory(view.getTextfield().getText());
             model.setOperand(operation);
         }
@@ -72,9 +106,9 @@ public class CalculadoraController {
 
     private void evaluate() {
         double result;
-        result = model.evaluate(model.getMemoryNumber(), Double.parseDouble(view.getTextfield().getText()));
+        result = model.evaluate(model.getActualNumber(), Double.parseDouble(view.getTextfield().getText()));
         view.setResult(result);
-        model.setMemoryNumber(result);
+        model.setActualNumber(result);
         model.setOperandPressed(true); // como se acaba de presionar un operando se settea a true
     }
 }

@@ -42,7 +42,7 @@ public class CalculadoraView extends JFrame {
         createGroupLayout();
 
         pack(); // agrupa los botones para el display
-        //cambia el tamaño del boton 0
+        // cambia el tamaño del boton 0
         button0.setMinimumSize(new Dimension(buttonCE.getWidth() * 2 + 7, buttonCE.getHeight()));
         buttonMR.setMinimumSize(new Dimension(buttonCE.getWidth() * 2 + 7, buttonCE.getHeight()));
         buttonMS.setMinimumSize(new Dimension(buttonCE.getWidth() * 2 + 7, buttonCE.getHeight()));
@@ -163,14 +163,12 @@ public class CalculadoraView extends JFrame {
                                         .addComponent(buttonCE))))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(memoryTextField)
+                        .addComponent(buttonMS)
+                        .addComponent(buttonMR)
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(buttonMPlus)
                                 .addComponent(buttonMMinus))
-                        .addComponent(buttonMR)
-                        .addComponent(buttonMS)
-                        .addComponent(buttonMC))
-
-        );
+                        .addComponent(buttonMC)));
 
         // Todos los botones tienen el mismo tamaño que el mayor boton, en este caso el
         // boton CE
@@ -206,16 +204,20 @@ public class CalculadoraView extends JFrame {
                                 .addComponent(buttonCE)))
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(memoryTextField)
+                        .addComponent(buttonMS)
+                        .addComponent(buttonMR)
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                 .addComponent(buttonMPlus)
                                 .addComponent(buttonMMinus))
-                        .addComponent(buttonMR)
-                        .addComponent(buttonMS)
                         .addComponent(buttonMC)));
     }
 
     public JTextField getTextfield() {
         return textField;
+    }
+
+    public JTextField getMemoryTextField() {
+        return memoryTextField;
     }
 
     public JButton getButton0() {
@@ -294,11 +296,38 @@ public class CalculadoraView extends JFrame {
         return buttonPerc;
     }
 
+    public JButton getButtonMC() {
+        return buttonMC;
+    }
+
+    public JButton getButtonMMinus() {
+        return buttonMMinus;
+    }
+
+    public JButton getButtonMPlus() {
+        return buttonMPlus;
+    }
+
+    public JButton getButtonMR() {
+        return buttonMR;
+    }
+
+    public JButton getButtonMS() {
+        return buttonMS;
+    }
+
     public void setTextField(int number) {
         if (textField.getText().equals("0")) {
             textField.setText(Integer.toString(number));
         } else
             textField.setText(textField.getText() + Integer.toString(number));
+    }
+
+    public void setMemoryTextField(double number) {
+        if (number % 1 == 0) // Si el resultado no tiene decimales se muestra un número entero
+            memoryTextField.setText(Integer.toString((int) number));
+        else
+            memoryTextField.setText(Double.toString(number));
     }
 
     public void setResult(double number) {
