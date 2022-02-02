@@ -1,36 +1,40 @@
 import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
 
+//Vista de la calculadora. Utilizada para generar y gestionar el layout de la calculadora.
 public class CalculadoraView extends JFrame {
 
+    //Se utliza Group Layout como contenedor para estructurar los botones
+    GroupLayout layout;
     // Caja para mostrar el texto
     JTextField textField;
     // Caja para mostrar el texto de memoria
-
     JTextField memoryTextField;
     // Botones numéricos
     JButton button0, button1, button2, button3, button4;
     JButton button5, button6, button7, button8, button9;
     // Boton punto
     JButton buttonDot;
-    // Botones de operandos
+    // Botones de operadores
     JButton buttonPlus, buttonMinus, buttonMult, buttonDiv, buttonPerc, buttonEqual;
     // Botones de reseteo
     JButton buttonC, buttonCE;
     // Lista de todos los botones (para posible utilidad en el código)
     List<JButton> buttonList = new ArrayList<JButton>();
-
-    // botones de meoria
+    // botones de memoria
     JButton buttonMS, buttonMR, buttonMPlus, buttonMMinus, buttonMC;
 
-    GroupLayout layout;
-
     public CalculadoraView() {
+        this.setTitle("Calculadora");
+        Toolkit tl = Toolkit.getDefaultToolkit();
+        Image imagen = tl.getImage("src/calculadora_icon.png");
+        setIconImage(imagen);
 
-        this.setTitle("calculando...");
         // Crear los componentes
         initComponents();
         // Inicializar lista de botones
@@ -41,21 +45,16 @@ public class CalculadoraView extends JFrame {
         // Creando el layout
         createGroupLayout();
 
-        pack(); // agrupa los botones para el display
-        // cambia el tamaño del boton 0
-        button0.setMinimumSize(new Dimension(buttonCE.getWidth() * 2 + 7, buttonCE.getHeight()));
-        buttonMR.setMinimumSize(new Dimension(buttonCE.getWidth() * 2 + 7, buttonCE.getHeight()));
-        buttonMS.setMinimumSize(new Dimension(buttonCE.getWidth() * 2 + 7, buttonCE.getHeight()));
-        buttonMC.setMinimumSize(new Dimension(buttonCE.getWidth() * 2 + 7, buttonCE.getHeight()));
-
         setLocationRelativeTo(null); // centra la ventana en el medio de la panyalla
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false); // no se permite que la ventana cambie de tamaño
         setVisible(true); // se habilita la visibilidad de la ventana
     }
 
+    //Función auxiliar que inicializa una lista con todos los botones de la calculadora.
+    //A excepción de los botones que no tienen el mismo tamaño que el CE.
     private void initButtonList() {
-        // buttonList.add(button0);
+        //buttonList.add(button0);
         buttonList.add(button1);
         buttonList.add(button2);
         buttonList.add(button3);
@@ -82,6 +81,7 @@ public class CalculadoraView extends JFrame {
         buttonList.add(buttonMPlus);
     }
 
+    //Inicializa todos los componentes de la calculadora
     private void initComponents() {
         textField = new JTextField();
         textField.setPreferredSize(new Dimension(0, 30)); // Cambiando tamaño de la altura de la caja de texto
@@ -89,6 +89,7 @@ public class CalculadoraView extends JFrame {
         textField.setHorizontalAlignment(JTextField.RIGHT);// Los números se alinean a la derecha
 
         memoryTextField = new JTextField();
+        //Mismos ajustes
         memoryTextField.setPreferredSize(new Dimension(0, 30));
         memoryTextField.setEditable(false);
         memoryTextField.setHorizontalAlignment(JTextField.RIGHT);
@@ -122,15 +123,11 @@ public class CalculadoraView extends JFrame {
         buttonMR = new JButton("MR");
         buttonMS = new JButton("MS");
         buttonMC = new JButton("MC");
-
-        button0.setMinimumSize(
-                new Dimension((int) buttonCE.getSize().getWidth() * 2, (int) buttonCE.getSize().getHeight()));
     }
 
+    //Utilizada para crear el Layout
     private void createGroupLayout() {
-        layout.setAutoCreateGaps(true);
-        layout.setAutoCreateContainerGaps(true);
-
+        //Grupo horizontal
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(textField)
@@ -169,13 +166,7 @@ public class CalculadoraView extends JFrame {
                                 .addComponent(buttonMPlus)
                                 .addComponent(buttonMMinus))
                         .addComponent(buttonMC)));
-
-        // Todos los botones tienen el mismo tamaño que el mayor boton, en este caso el
-        // boton CE
-        for (JButton jButton : buttonList) {
-            layout.linkSize(jButton, buttonCE);
-        }
-
+        //Grupo vertical
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(textField)
@@ -210,8 +201,28 @@ public class CalculadoraView extends JFrame {
                                 .addComponent(buttonMPlus)
                                 .addComponent(buttonMMinus))
                         .addComponent(buttonMC)));
+        
+        //Ajustes finales del layout
+        //Setteo de distancia entre bottones
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+
+        // Todos los botones tienen el mismo tamaño que el mayor boton, en este caso el
+        // boton CE
+        for (JButton jButton : buttonList) {
+            layout.linkSize(jButton, buttonCE);
+        }
+
+        pack(); // agrupa los botones para el display
+
+        // cambia el tamaño de los botones 0, MR, MS y MC
+        button0.setMinimumSize(new Dimension(buttonCE.getWidth() * 2 + 7, buttonCE.getHeight()));
+        buttonMR.setMinimumSize(new Dimension(buttonCE.getWidth() * 2 + 7, buttonCE.getHeight()));
+        buttonMS.setMinimumSize(new Dimension(buttonCE.getWidth() * 2 + 7, buttonCE.getHeight()));
+        buttonMC.setMinimumSize(new Dimension(buttonCE.getWidth() * 2 + 7, buttonCE.getHeight()));
     }
 
+    //Getters
     public JTextField getTextfield() {
         return textField;
     }
@@ -316,6 +327,10 @@ public class CalculadoraView extends JFrame {
         return buttonMS;
     }
 
+    //Set de la caja de texto con los números introducidos en la calculadora.
+    //Esta función no se utiliza para hacer set del un resultado de operación.
+    //Los números se concatenan al final del contenido,
+    //en el caso de que el número de la caja sea 0, se substituye.
     public void setTextField(int number) {
         if (textField.getText().equals("0")) {
             textField.setText(Integer.toString(number));
@@ -323,13 +338,7 @@ public class CalculadoraView extends JFrame {
             textField.setText(textField.getText() + Integer.toString(number));
     }
 
-    public void setMemoryTextField(double number) {
-        if (number % 1 == 0) // Si el resultado no tiene decimales se muestra un número entero
-            memoryTextField.setText(Integer.toString((int) number));
-        else
-            memoryTextField.setText(Double.toString(number));
-    }
-
+    //Set de la caja de texto, en este caso, esta función se utiliza para settear un resultado.
     public void setResult(double number) {
         if (number % 1 == 0) // Si el resultado no tiene decimales se muestra un número entero
             textField.setText(Integer.toString((int) number));
@@ -337,20 +346,32 @@ public class CalculadoraView extends JFrame {
             textField.setText(Double.toString(number));
     }
 
+    //Set de la caja de texto de memoria.
+    public void setMemoryTextField(double number) {
+        if (number % 1 == 0) // Si el resultado no tiene decimales se muestra un número entero
+            memoryTextField.setText(Integer.toString((int) number));
+        else
+            memoryTextField.setText(Double.toString(number));
+    }
+
+    //Resetea el número de la caja de texto a number.
+    //Esta función es necesaria para resetear el número de la caja de texto tras presionar un operador.
     public void resetTextField(int number) {
         textField.setText(Integer.toString(number));
     }
 
+    //Añade un punto tras el número de la caja de texto
     public void setDotOnTextField() {
-        if (!textField.getText().contains(".")) {
+        if (!textField.getText().contains(".")) {//Si ya hay un punto no se puede poner otro
             textField.setText(textField.getText() + ".");
         }
     }
 
-    public void deleteOperand() {
-        if (!textField.getText().equals("0")) {
+    //Elimina un número de la caja de texto
+    public void deleteLastNumber() {
+        if (!textField.getText().equals("0")) {//Si hay solamente un 0 en la caja no se puede borrar más
             textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
-            if (textField.getText().length() == 0)
+            if (textField.getText().length() == 0)//Cuando se eliminan todos los números se añade un 0 a la caja
                 textField.setText("0");
         }
     }

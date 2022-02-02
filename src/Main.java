@@ -1,6 +1,8 @@
 import javax.swing.SwingUtilities;
 
-public class principal {
+//Se ha utilizado el patrón modelo-vista-controlador para implementar la calculadora.
+//En el caso de modelar las operaciones se ha utilizado un patrón estrategia.
+public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
